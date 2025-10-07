@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a1a2e;
+            --card-color: #16213e;
+            --text-color: #e9ecef;
+            --input-bg: #222e51;
+            --border-color: #4a577c;
+            --accent-color: #e53170;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+        }
+
+        .signup-card {
+            background-color: var(--card-color);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            padding: 3rem;
+            width: 100%;
+            max-width: 420px;
+            animation: fadeIn 0.8s ease-in-out;
+            border: 1px solid #28335f;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-control {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background-color: var(--input-bg);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(229, 49, 112, 0.25);
+        }
+
+        .form-control::placeholder {
+            color: #929bb1;
+        }
+
+        .input-group-text {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+            color: var(--text-color);
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff488e;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(229, 49, 112, 0.3);
+        }
+        
+        .errorlist {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            list-style: none;
+            padding: 0;
+            margin-top: 0.5rem;
+        }
+
+        .login-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .login-link:hover {
+            color: #ff488e;
+            text-decoration: underline;
+        }
+        
+        h2 {
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+
+        p {
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-card">
+        <h2 class="text-center">Create Your Account</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    {{ form.username }}
+                </div>
+                {% if form.username.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.username.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    {{ form.email }}
+                </div>
+                {% if form.email.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    {{ form.password1 }}
+                </div>
+                {% if form.password1.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.password1.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    {{ form.password2 }}
+                </div>
+                {% if form.password2.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.password2.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        </form>
+        <p class="text-center mt-3">
+            Already have an account? <a href="" class="login-link">Log in</a>
+        </p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
